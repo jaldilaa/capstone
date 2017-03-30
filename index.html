@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<!-- @itsrajatarora -->
+<html lang="en" ng-app="storeApp"
+ng controller="storeController" xmlns="http://www.w3.org/1999/html">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA" content="IE=edge">
+	<meta mame="viewport" content="width=device-width, initial-scale=1">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<title ng-bind="$root.title + ' | Aurelia' ">Welcome | Aurelia</title>
+	<base href="/">
+
+	 <!-- Le styles --> 
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="css/animations.css"/>
+    <link rel="stylesheet" type="text/css" href="css/loading-bar.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/fonts.css"/>
+    <link rel="stylesheet" type="text/css" href="css/angucomplete-alt.css">
+    <link rel="stylesheet" type="text/css" href="css/ngDialog.min.css">
+    <link rel="stylesheet" type="text/css" href="css/ngDialog-theme-plain.min.css">
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.min.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <style type="text/css">
+    	[ng-cloak] {
+    			display: none;
+    				}
+    </style>
+</head>
+<body ng-cloak>
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-header">
+		<a href="/"><img src="../../images/logo-white.png" class="hidden-xs hidden-sm col-md-offset-1" style="width: 116px; margin-left: 0px; margin-top: 0px"></a>
+	</div>
+	<div id="navbar" class="">
+		<a ng-click="menu!=menu" class="visible-xs">
+			<i class="fa fa-bars fa-fw fa-3x fa-inverse pull-left"></i>
+		</a>
+		<div angucomplete-alt id="depts" placeholder="Search Jaldila..." pause="300" selected-objects="selectedDepts" remote-url="http://localhost:8080/api/search?s=" search-fields="Prodcut.name" title-fields="Product.name" minlength="1" maxlength="20" description-field="name" override-suggestions="true" match-class="highlight" autocapitalize="on" autocorrect="off" input-class"form-control form-inline form-control-small" class="col-log-8 col-md-6 col-sm-6 col-xs-7 col-lg-offset-1 depts" ng-pattern="/^[A-Za-z]+$/" image-fields="Product.name">
+		</div>
+
+<!-- remote-url-response-formatter="addImageUrlToObject" -->
+
+		<span class="cart-toggle hidden-xs hidden-sm navbar-right" id="cart-toggle" style="margin-top: 4px; padding-right:4px !important; margin-right: 4px !important; cursor:hand; font-size: 18px; vertical-align: middle" ng-disabled="cart.getTotalCount() < 1" data-displacement="bottom" data-trigger="focus" data-container="body" data-content="Item(s) succesfully added to cart!">
+			<strong>{{cart.getTotalPrice() | currency:"&#8377;"}}</strong>
+			<span class="muted hidden-xs">for</span>
+			<strong>{{cart.getTotalCount()}}&nbsp;items</strong>
+		</span>
+		<div class="xs-btn visible-xs visible-sm hidden-md pull-right col-xs-2" style="margin-right: 15px" data-placement="bottom" data-trigger="focus" data-container="body" data-content="Item(s) added!" ng-click="carted=!carted; phoneCart=!phoneCart" ng-init="phoneCart=false" ng-class="{active : carted}">
+			<i class="fa fa-cart-arrow-down fa-3x fa-inverse"></i>
+			<span id="blog-badge" style="display:block;">{{cart.getTotalCount()}}</span>
+		</div>
+	</div>
+</div>
+
+<nav class="navbar navbar-default navbar-fixed-top ic-nav-secondary" ng-controller="HeadCtrl" style="margin-top: 36px;">
+	<div class="container">
+		<span ng-show="phoneCart" class="navbar-left col-xs-offset-3" id="cart-toggle" style="position:fixed;margin-top:10px !important;cursor:hand;font-size: 20px;" ng-disabled="cart.getTotalCount() < 1">
+			<strong>{{cart.getTotalPrice() | currency:"&#8377;"}}</strong>
+			<span class="muted">for</span>
+			<strong> {{cart.getTotalCount()}}&nbsp;items</strong>
+		</span>
+		
+		<div class="btn-group navbar-btn navbar-left" style="position:absolute;margin-top: 3px;margin-left: -45px">
+			<a role="button" href="/help" class="btn btn-info"><strong>HELP</strong></a>
+			<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+				<span class="caret"></span>
+				
+
+				<!-- skippd 101-107 -->
+		<div class="btn-group navbar-btn navbar-left" style="position:absolute;margin-top: 3px;margin-left:-45px">
+          <a role="button" href="/help" class="btn btn-info"><strong>HELP</strong></a>
+          <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu help-menu" role="menu">
+          	<li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li class="divider"></li>
+            <li style="padding-bottom:5px">
+            	<ul class="list-inline">
+            		<li style="padding-left:15px"><a href="#">Terms</a></li>
+            		<li><a href="">Privacy</a></li>
+            		<li><a href="">Refund</a></li>
+            		<li><a href="">Contact</a></li>
+            	</ul>
+            </li>
+           </ul>
+         </div>
+		<a href="/store" class="hidden-sm hidden-xs hidden-md" style="position:absolute;margin-left:50px;margin-top: -5px !important;">
+			<button type="button" class="btn btn-default navbar-btn navbar-left btn-warning">
+				<strong>POPULAR</strong>
+			</button>
+		</a>
+
+		<!-- skipd 133-146 -->
+
+		<div style="margin-left: 200px; margin-top: -2px !important;" class="hidden-xs">
+			<ul class="nav nav-pills animate col-lg-2" ng-repeat="something in somethings">
+				<li role="presentation" class="dropdown position-me nav" ng-class="something.class">
+					<a class="dropdown-toggle" data-toggle="dropdown">
+						<i ng-class="something.icon"></i>&nbsp;{{ something.name }}&nbsp;
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" id="navigation">
+						<li ng-repeat="child in something.aisles" ng-if="!child.aisles.length">
+							<a style="curson:pointer;" ng-href="/store/{{something.name}}/{{child.name}}">{{ child.display_name }}</a>
+						</li>
+						<li class="dropdown-submenu" ng-repeat="subchild in something.aisles" ng-if="subchild.aisles.length">
+                            <a class="dropdown-toggle" style="cursor: pointer;"  ng-href="/store/{{subchild.name}}" ng-class="subchild.class">{{ subchild.display_name }}</a>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="aislesubchild in subchild.aisles">
+                                    <a style="cursor: pointer;" ng-href="/store/{{subchild.name}}/{{ aislesubchild.name }}">{{aislesubchild.display_name}}</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="row visible-xs" style="margin-top:-5px;" ng-show="!phoneCart">
+            <ul class="nav nav-pills navbar-nav animate list-inline" ng-repeat="something in somethings">
+                <li ng-class="something.class" class="">
+                    <a href="store/{{ something.name }}" ng-show="something.name!='More'">
+                        {{ something.name }}
+                    </a>
+                </li>              
+                <li class="dropdown" ng-hide="something.name!='More'" style="width:80px !important">
+                    <a class="dropdown-toggle text-center" data-toggle="dropdown">
+                        <span class="">{{ something.name }}</span>
+                    </a>
+                    <ul  class="dropdown-menu dropdown-menu-right" id="navigation" style="position:absolute; width:200px; right:0; margin-top:-5px">
+                        <a href="#" class="list-group-item active">
+                          Cras justo odio
+                        </a>
+                        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+                        <a href="#" class="list-group-item">Morbi leo risus</a>
+                        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+                        <a href="#" class="list-group-item">Vestibulum at eros</a>
+                            <a style="cursor: pointer;" class="list-group-item"  ng-repeat="child in something.aisles" ng-if="!child.aisles.length" ng-href="/store/{{ child.name }}">{{ child.display_name }}</a>
+                    </ul>
+                </li>                        
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+	<div class="row" style="margin-top: 80px; border-left: 1px solid #e5edc !important;">
+		<div class="navbar-right hidden-xs" style="position: fixed !important;top:39px !important;right: 30px !imporant;z-index: 1010 !imporant;">
+			<button type="button" class="btn btn-warning cart-toggle" ng-click="carted=!carted;" ng-class="{active: carted}" style="">
+				<strong>CART</strong>
+				<i class="fa fa-fw fa-angle-right visible-minimized btn-cart-toggle" title="Expand cart" ng-if="!carted"></i>
+				<i class="fa fa-fw fa-angle-down visible-minimized btn-cart-toggle" title="Expand cart" ng-if="carted"></i>
+			</button>
+		</div>
+
+		<!-- header -->
+		<div class="warehouse-cart-header-delivery-time col-xs-12 col-sm-4 col-md-4 col-lg-4" ng-show="carted||phoneCart">
+			<div class="main-warehouse-header">
+				<button class="btn btn-danger pull-right" ng-click="cart.clearItimes()" ng-disabled="cart.getTotalCount() < 1" style="font-size: 14px;margin-top: 0" title="Cleat Cart"><i class="fa fa-trash-o fa-2x fa-fw"></i>
+				</button>
+			</div>
+			<div class="delivery-fees sub-warehouse-header sub-warehouse-header-dark">
+				<span class="warehouse-name"><span class="text-primary">FREE</span>Delivery in 60 minutes!</span><br>
+				<span class="visible-xs visible-sm text-info">
+					<i class="fa fa-eye"></i>
+					Swipe left to remove
+				</span>
+			</div>
+		</div>
+		<div class="cart-in-sidebar col-xs-12 col-sm-4 col-md-4 col-lg-4" ng-show="carted">
+
+			<!--items -->
+			<table class="table">
+				<!-- empty cart message -->
+				<tr ng-hide="cart.getTotalCount() > 0" >
+					<td class="tdCenter text-center text-muted">
+						<i class="fa fa-shopping-cart" style="font-size: 22em !important;display: block;padding-left:0 !important;"></i>
+						<div class="" style="font-size: 2em !important;"></div>
+					</td>
+				</tr>
+				<!-- cart items -->
+				<tr style="color:#5a5a5a;font-weight: 400;" ng-repeat="item in cart.items | orderBy: 'name'" ng-swipe-left="showActions=true" ng-swipe-right="showAction=false">
+					<td class="">
+						<div class="btn-group-vertical btn-group-xs" role="group" aria-label=".." >
+							<button class="btn btn-default" type="button" ng-disabled="item.quantity >= 20" ng-click="cart.addItem(item.sku, item.name, item.price,+1, item.description)" ><i class="fa fa-angle-up"></i></button>
+							<button class="text-canter btn btn-default" type="button" ng-model="item.quantity" ng-change="cart.saveItems()"disabled>{{item.quantity}}</button>
+							<button class="btn btn-default" type="button" ng-disabled="item.quantity <= 1" ng-click="cart.addItem(item.sku,item.name,item.price,-1,item.description)"><i class="fa fa-angle-down"></i>
+							</button>
+					</div>
+				</td>
+				<td class="clr-pad">
+					<img holder="js/holder.js/80x80/text:aurelia" ng-src="../../images/Store/{{item.sku}}.jpg" class="cart.img" holder-fix />
+				</td>
+				<td class="col-lg-6">
+					<span class="xs-cart-text">{{item.name}}</span><br>
+					<span class="text-muted">{{item.description}}</span>
+				</td>
+				<td class="col-lg-2">
+					<span class="xs-cart-text">{{item.price * item.quantity | currency:"&#8
+					77;"}}
+					</span>
+					<a class="hidden-xs btn-times-remove" ng-click="cart.addItem(item._id,item.sku,item.name,item.price, -1000000, item.description" title="remove from cart">
+					<i class="fa fa-times fa-fw x"></i>
+                        </a>
+                        <button class="btn btn-default btn-danger btn-sm visible-xs btn-item-remove" ng-show="showActions" ng-click="cart.addItem(item._id, item.sku, item.name, item.price, -10000000, item.description)">remove</button>
+                 </td>
+<!--                     <td class="tdCenter hidden-xs" title="remove from cart">
+                    </td> -->
+                </tr>
+            </table>
+        </div>
+        
+        <!-- footer -->
+        <div class="btn-sidebar col-xs-12 col-lg-4" ng-show="carted||phoneCart" style="background:rgba(255,255,255,0.8) !important;">
+        	<a href="/checkout" class="hidden-xs">
+        		<button type="button" class="btn btn-block btn-success btn-below" ng-disabled="cart.getTotalCount() < 1" ng-hide="cart.getTotalPrice() < 100">
+        			<span style="font-size:20px; font-family: 'Open Sans',sans-serif;font-weight: 300 "><strong>PROCEED</strong></span>
+        			<i class="fa fa-fw fa-truck fa-flip-horizontal fa-2x"></i>
+        		</button>
+			</a>
+			<button type="button" class="btn btn-block btn-warning" ng-disabled="cart.getTotalCount() < 1" ng-show="cart.getTotalPrice() < 100">
+				<i class="fa fa-fw fa-exclamation-triangle fa-2x pull-left"></i>
+				<span style="font-size:20px;">&#8377;99&nbsp;</span>
+				<span style="font-size: 18px;font-weight:300;text-transform:uppercase; letter-spacing: 1px;">Mininmum</span>
+			</button>
+		</div>
+	</div>
+</div>
+<div class="animate ngbod" ng-view></div>
+<!-- ngbod defined in style.css -->
+
+<a class="btn-link pull-right scrollup">
+	<span class="fa-stack fa-lg">
+		<i class="fa fa-circle-thin fa-stack-2x"></i>
+		<i class="fa fa-angle-up fa-stack-1x" style="line-height: 34px"></i>
+	</span>
+</a>
+	
+	<div class="col-xs-12 menu-in-sidebar" ng-show="menu" ng-init="menu=false">
+		<img class="img-responsive text-center" style="width:100%" src="../../images/fallback.jpg">
+		<ul class="list-group">
+		<a href="#" class="list-group-item active">
+		Cras justo odio
+        </a>
+        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item">Morbi leo risus</a>
+        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+        <a href="#" class="list-group-item">Vestibulum at eros</a>
+        </ul>
+
+        <!-- skipping 311-332 cox -->
+	</div>
+
+	<!-- Le scripts -->
+    <script src="libs/angular.min.js"></script>
+    <script src="libs/angular-animate.min.js"></script>
+    <script src="libs/angular-route.min.js"></script>
+    <script src="libs/angular-resource.min.js"></script>
+    <script src="libs/angular-touch.min.js"></script>    
+    <script src="libs/jquery.min.js"></script>
+    <script src="libs/bootstrap.min.js"></script>
+    <script src="libs/holder.min.js"></script>
+    <script src="libs/loading-bar.min.js"></script>
+    <script src="libs/angucomplete-alt.min.js"></script>
+    <script src="libs/ngDialog.min.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/store/app.js"></script>
+    <script src="js/store/controller.js"></script>
+    <script src="js/store/store.js"></script>
+    <script src="js/store/product.js"></script>
+    <script src="js/store/shoppingCart.js"></script>
+
+    <!-- Nerd Stuff -->
+    <script src="js/controllers/NerdCtrl.js"></script>
+    <script src="js/services/NerdService.js"></script>
+
+    <!-- Javascripts Placed at the end of the document so the pages load faster -->
+    <script>
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('.scrollup').fadeIn();
+                } else {
+                    $('.scrollup').fadeOut();
+                }
+            });
+            $('.scrollup').click(function () {
+                event.preventDefault();
+                $("html, body").animate({
+                    scrollTop: 0
+                }, 600);
+                return false;
+            });
+        });
+        $('#cart-toggle').on('shown.bs.popover', function () {
+            var pop = $(this);
+            setTimeout(function () {
+                pop.popover('hide');
+            }, 2000);
+    });
+    </script>
+</body>
+</html>

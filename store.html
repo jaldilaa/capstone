@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<!--@itsrajatarora-->
+<html lang="en" ng-app="storeApp" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
+ <head>
+ 	<meta charset="utf-8">
+ 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+ 	<meta name="viewport" content="width=device-width, initia-scale=1">
+ 	<title>jaldila</title>
+
+ 	<!--le styles-->
+ 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="css/animations.css"/>
+    <link rel="stylesheet" type="text/css" href="css/loading-bar.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/fonts.css"/>
+
+    <!--favicon-->
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
+ <head>
+ <body ng-controller="storeController">
+ 	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<button type="button" class="navbar-toggle collapsed" aria-controls="navbar">
+				<span class="sr-only">Toggle Navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a href="#/"><img src="images/logo-white.png" class="hidden-xs col-md-offset-1" style="width: 116px; margin-left: 0px; margin-top: 0px"/></a>
+			</div>
+			<div id="nabar" class="navbar-collapse collapse">
+				<div class="hide-on-checkout navbar-search col-lg-9 nav" data-ng-controller="SrchCtrl" role="search">
+						<input
+						type"search" ng-model="search" placeholder="&#xf002; Click herer or press '/' to search" class="search-term search-query hasclear form-control"
+						style="fornt=-family: FontAwesome,'Open Sans'; font-size:18px;margin-top:1px; margin-left: 20px"
+						ng-minlenth="3"
+						ng-pattern="/^[A-Za-z]+$/"
+						ng-focus="focus=true"
+						ng-blur="focus=false"
+						docs-search-input-autocomplete="off"
+						autofocus require />
+				<span class="clearer fa fa-times-circle-o fa-2x form-control-feedback hidden-xs hidden-sm"
+				style="color: darkgray;position: absolute;top:4px;left: 196.5px; cursor: hand" ngshow="search.length" ng-click="search =''"></span>
+				<table class="table table-bordered search table" style="background-color:#f5f5f5;position:absolute;z-index:999;top:35px;" ng-show="search" ng-click="seacrh=''">
+					<tr class="animatelist" data-ng-repeat="keyword in keywords|filter:search" style="list-style=:none">
+					<td><a data-ng-href="#store/{{keyword.Department}}/{{keyword.Category}}" style="font-size: 16px">{{keyword.title}}</a><span class="muted">&nbsp;in&nbsp;</span>{{keyword.Deparment}}</td>
+					</tr>
+				</table>
+			</div>
+		<span class="cart-toggle hidden-xs navbar-right" id="cart-toggle" style="margin-top: 40px; padding-right: 4px !important; cursor:hand;font-size:18px;vertical-align: middle" ng-disabled="cart.getTotalCount() < 1" data-placement="bottom" data-trigger="focus" data-container="body" data-content="item(s) succesfully added to cart!">
+		<strong>{{cart.getTotalPrice() |currency:"&#8377;"}}</strong>
+		<span class="muted hidden-xs">for</span><strong>{{cart.getTotalCount()}}&nbsp;items</strong>
+		</span>
+	</div>
+</div>
+</div>
+
+<nav class="navbar navabr-default navbar-fixed-top ic-nav-secondary" ng-controller="HeadCtrl" style="margin-top: 36px;">
+	<div class="container-fluid">
+		<a href="#/help" class="hidden-sm hidden-xs hidden-md" style="position: absolute;margin-top: -5px!important;">
+			<button type="button" class="btn btn-default navbar-btn navbar-left btn-info"><strong>Help</strong><i class="fa fa-info-circle fa-fw"></i></button>
+		</a>
+		<div style="margin-left: 200px; margin-top: -3px !important;">
+			<ul class="nav nav-pills animate col-lg-2" ng-repeat="list 1 goes here">
+				<li role="presentation" class="dropdown position-me nav" ng-class="something.class">
+					<a class="dropdown-toggle" data-toggle="dropdown">
+						<i ng-class="something.icon"></i>&nbsp;{{ something.name }}&nbsp;<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu" id="navigation">
+						<li ng-repeat="child in something.aisles" ng-if="!child.aisles.length">
+							<a styles="cursor:pointer;" ng-href="#/store/{{something.name}}/{{ child.name }}">{{ child.display_name }}</a>
+						</li>
+						<li class="dropdown-submenu" ng-repeat="subchild in something.aisles" ng-if="subchild.aisles.length">
+							<a class="dropdown-toggle" style="cursor:pointer;"ng-href="#/store/{{subchild.name}}" ng-class="subchild.class">{{ subchild.display_name }}</a>
+							<ul class="dropdown-menu">
+								<li ng-repeat="aislesubchild in subchild.aisles">
+									<a style="cursor: pointer;" ng-href="#/store/{{subchild.name}}/{{ aislesubchild.name }}">{{aislesubchild.display_name}}</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+
+		<img src="images/logo-black.png" alt="clone" class="img-resonsive visible-xs" width="80px" style="position: absolute;top: 50px;left: 40%">
+	</div>
+</nav>
+<div class="container-fluid">
+	<div class="row" style="margin-top: 80px; border-left: 1px solid #e5edec !important;">
+			<div class="navbar-right" style="position:fixed !important; top: 39px; !important; right:30px !important;z-index: 1010 !important;">
+				<button type="button" class="btn btn-warning cart-toggle hidden-xs" ng-click="carted=!carted;" ng-class="{active: carted}" style="">
+					<strong>CHECKOUT</strong>
+					<i class="fa fa-fw fa-angle-right visible-minimized toggle-cart" title="expand cart" ng-if="!carted"></i>
+					<i class="fa fa-fw fa-angle-down vivible-minimized toggle-cart" title="expand cart" ng-if="carted"></i>
+				</button>
+				<button class="btn btn-success btn-small cart-toggle visible-xs" ng-click="carted=!carted" style="margin-top: -0.2px">
+				{{ cart.getTotalPrice() | currency:"&#8377;" }}
+					<i class="fa fa-fw fa-plus visible-minimized toggle-cart" title="expand cart" ng-if="!carted"></i>
+					<i class="fa fa-fw fa-minus visible-minimized toggle-cart" title="expand cart" ng-if="carted"></i>
+				</button>
+			</div>
+		
+
+			<!--header-->
+			<div class="warehouse-cart-header delivery-time col-lg-4" ng-show="carted">
+				<div class="main-warehouse-header">
+					<button class="btn btn-danger pull-right" ng-click="cart.clearitems()" ng-disbaled="cart.getTotalCount < 1" style="font-size: 14px;margin-top: 0" title="Clear Cart"><i class="fa fa-trash-o fa-2x fa-fw"></i></button>
+				</div>
+				<div class="delivery-fees sub-warehouse-hader sub-warehouse-header-dark">
+					<span class="warehouse name"><span class="text-primary">FREE</span>Delivery in 90 mins!</span><br>
+					<span class="delivery-fee"><span class="text-danger">&#8377;50</span>&nbsp;minimum</span>
+				</div>
+			</div>
+		
+		
+			<!--cart body-->
+			<div class="cart cart-in-sidebar col-lg-4" ng-show="carted">
+
+				<!--items-->
+				<table class="table">
+
+					<!--empty cart message-->
+					<tr ng-hide="cart.getTotalCount() > 0" >
+						<td class="tdCenter text-center">
+							<i class="fa fa-shopping-cart text-muted" style="font-size: 24em !important; display:block;padding-left: 0 !important;"></i>
+							<div class="text-canter text-muted" style="font-size:2em !important;">Your cart is empty.</div>
+						</td>
+					</tr>
+
+					<!--cart items-->
+					<tr style="color: #5a5a5a;font-weight: 400;" ng-repeat="items in cart.items | orderBy:'name'">
+					<td>
+					<!-- use type=tel instead of  to prevent spinners -->
+					<div class="btn-group-vertical btn-group-xs" role="group" aria-label="..." >
+						<button class="btn btn-default" type="button" ng-disabled="item.quantity >= 20" ng-click="cart.addItem(item.sku,item.name, item.description)"><i class="fa fa-angle-up"></i></button>
+						<button class="text-center btn btn-default" type="button" ng-model="item.quantity" ng-change="cart.saveItems()" disabled>{{item.quantity}}</button>
+						<button class="btn btn-default" type="button" ng-disabled="item.quantity <= 1" ng-click="cart.addItem(item.sku,item.name,item.price, -1,item.description)"><i class="fa fa-angle-down"></i>
+						</button>
+					</div>
+				</td>
+				<td class="clr-pad"><img holder="js/holder.js/80x80/text:aurelia" ng-src="images/Store/{{item.sku}}.jpg" class="cart-img" holder-fix></td>
+				<td>{{item.name}}<br><span class="text.muted">{{item.description}}</span></td>
+				<td class="tdRight">{{item.price * item.quantity | currency:"&#8377;"}}</td>
+				<td class="tdCenter" title="remove from cart">
+					<button class="btn btn-link" ng-click="cart.addItem(item.sku, item.name, item.price, -1000000, item.description)">
+						<i class="fa fa-times fa-fw"></i>
+					</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+
+	<!--footer-->
+	<div class="btn-sidebar col-lg-4" ng-show="carted">
+		<a href="#/store/checkout">
+			<button type="button" class="btn btn-block btn-success btn-below col-lg-2" ng-disabled="cart.getTotalCount() < 1">
+				<span style="font-size: 20px; font-family:'Open Sans', sans-serif; font-weight: 300">Checkout Now</span>
+				<i class="fa fa-fw fa-truck fa-flip-horizontal fa-2x"></i>
+			</button>
+		</a>
+	</div>
+
+	<div class="animate" style="margin-top: 10px !important;" ng-view></div>
+
+	<a class="btn-link pull-right scrollup">
+		<span class="fa-stack fa-lg">
+			<i class="fa fa-circle-thin fa-stack-2x"></i>
+			<i class="fa fa-angle-up fa-stack-1x" style="line-height: 34px"></i>
+		</span>
+	</a>
+	<footer style="" id="footer" class="footer">
+		<div class="container"><ul class="nav nav-pills pull-left">
+			<li>
+				<a href="#">Home</a>
+			</li>
+			<li>
+				<a href="#/help">FAQ</a>
+			</li>
+			<li>
+				<a href="#/blog">Blog</a>
+			</li>
+			<li>
+				<a href="#/contact">Contact</a>
+			</li>	
+			<li>
+				<a href="#/privacy">Privacy</a>
+			</li>
+			<li>
+				<a href="#/terms">Terms</a>
+			</li>
+		</ul>
+		<div class="pull-right">
+			<div style="margin-right:5px"><p class="muted credit"><img src="images/logo-black.png" width="100x">is a project by <a href="http://linkedin.com/itsrajatarora">RAJAT ARORA</a></p></div>
+		</div>
+	</div>
+	</footer>
+
+<!-- Le scripts -->
+    <script src="libs/angular.min.js"></script>
+    <script src="libs/angular-animate.min.js"></script>
+    <script src="libs/angular-route.min.js"></script>
+    <script src="libs/angular-resource.min.js"></script>
+    <script src="libs/jquery.min.js"></script>
+    <script src="libs/bootstrap.min.js"></script>
+    <script src="libs/holder.min.js"></script>
+    <script src="libs/loading-bar.min.js"></script>
+    
+    <script src="js/routes.js"></script>
+
+    <script src="js/store/app.js"></script>
+    <script src="js/store/controller.js"></script>
+    <script src="js/store/store.js"></script>
+    <script src="js/store/product.js"></script>
+    <script src="js/store/shoppingCart.js"></script>
+
+<!-- Javascripts Placed at the end of the document so the pages load faster -->
+    <script>
+        $(document).ready(function () {
+            $(window).scroll(function () {
+                if ($(this).scrollTop() > 100) {
+                    $('.scrollup').fadeIn();
+                } else {
+                    $('.scrollup').fadeOut();
+                }
+            });
+            $('.scrollup').click(function () {
+                event.preventDefault();
+                $("html, body").animate({
+                    scrollTop: 0
+                }, 600);
+                return false;
+            });
+        });
+        $('#cart-toggle').on('shown.bs.popover', function () {
+            var pop = $(this);
+            setTimeout(function () {
+                pop.popover('hide');
+            }, 2000);
+    });
+    </script>
+</body>
+</html>	

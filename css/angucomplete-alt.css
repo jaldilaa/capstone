@@ -1,0 +1,96 @@
+/*.angucomplete-dropdown {
+    ...
+    overflow-y: auto;
+    max-height: 300px; // your preference
+    ...
+}*/
+.angucomplete-holder {
+	position: relative;
+}
+
+.angucomplete-dropdown {
+	border-color: #ececec;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 4px;
+	width: 300px;
+	padding: 6px;
+	cursor: pointer;
+	z-index: 9999;
+	position: absolute;
+	margin-top: -6px;
+	background-color: #ffffff;
+}
+
+.angucomplete-searching {
+	color: #acacac;
+	font-size: 14px;
+}
+
+.angucomplete-description {
+	font-size: 14px;
+}
+
+.angucomplete-row {
+	padding: 5px;
+	color: #000000;
+	margin-bottom: 4px;
+	clear: both;
+}
+
+.angucomplete-selected-row {
+	background-color: lightblue;
+	color: #ffffff;
+}
+
+.angucomplete-image-holder {
+	padding-top: 2px;
+	float: left;
+	margin-right: 10px;
+	margin-left: 5px;
+}
+
+.angucomplete-image {
+	height: 34px;
+	width: 34px;
+	border-radius: 50%;
+	border-color: #ececec;
+	border-style: solid;
+	border-width: 1px;
+}
+
+.angucomplete-image-default {
+	background-position: center;
+	background-size: contain;
+	height: 34px;
+	width: 34px;
+}
+
+================================================
+/*large desktops and laptops */
+@media(min-width: 1200px){
+
+}
+
+/*portrait tablets and medium desktops */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+/*portrait tablets and small desktops */
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/*landscape phones and portrait tablets */
+@media(max-width: 767px) {
+
+}
+
+/*landscape phones and smaller */
+@media (max-width: 480px) {
+	.angucomplete-dropdown {
+		width: 100%
+	}
+}
+
